@@ -11,6 +11,7 @@ Descripción:
 import os
 import json
 import logging
+import pandas as pd
 from datetime import date
 from typing import List, Dict, Any, Optional
 from dataclasses import dataclass
@@ -280,113 +281,26 @@ def cargar_lote_resiliente(conexion, lote_datos: List[Dict[str, Any]]) -> Dict[s
 # =============================================================================
 # 6. DEMOSTRACIÓN Y EJECUCIÓN (CON DATOS SINTÉTICOS DE PRUEBA)
 # =============================================================================
+
+
 if __name__ == "__main__":
-    print("\n--- INICIANDO PIPELINE DE VALIDACIÓN, RESILIENCIA Y BASE DE DATOS ---\n")
-
-    # Lote de datos de prueba simulando salidas del proceso previo de transformación
-    lote_prueba: List[Dict[str, Any]] = [
-        # Caso 1: Registro VÁLIDO estándar
-        {
-            "id_orden": "ORD-1001",
-            "fecha": "2026-10-22",
-            "id_producto": "PROD-LAT-01",
-            "cantidad": 5,
-            "precio_unitario_mxn": 150.50,
-            "monto_total_mxn": 752.50,
-            "email": "cliente.fiel@empresa.com",
-            "segmento_importe": "MEDIO",
-            "monto_escalado": 0.452310
-        },
-        # Caso 2: Registro INVÁLIDO -> Cantidad <= 0 (activará el @field_validator)
-        {
-            "id_orden": "ORD-1002",
-            "fecha": "2026-10-22",
-            "id_producto": "PROD-LAT-02",
-            "cantidad": -3,
-            "precio_unitario_mxn": 220.00,
-            "monto_total_mxn": -660.00,
-            "email": "error.cantidad@empresa.com",
-            "segmento_importe": "BAJO",
-            "monto_escalado": 0.120000
-        },
-        # Caso 3: Registro VÁLIDO con cantidades altas
-        {
-            "id_orden": "ORD-1003",
-            "fecha": "2026-10-21",
-            "id_producto": "PROD-TECH-99",
-            "cantidad": 12,
-            "precio_unitario_mxn": 1250.00,
-            "monto_total_mxn": 15000.00,
-            "email": "compras.corp@tecnologia.mx",
-            "segmento_importe": "ALTO",
-            "monto_escalado": 0.985000
-        },
-        # Caso 4: Registro INVÁLIDO -> Fecha con formato incorrecto
-        {
-            "id_orden": "ORD-1004",
-            "fecha": "FECHA-INVALIDA-2026",
-            "id_producto": "PROD-TECH-05",
-            "cantidad": 1,
-            "precio_unitario_mxn": 500.00,
-            "monto_total_mxn": 500.00,
-            "email": "usuario.test@portal.com",
-            "segmento_importe": "BAJO",
-            "monto_escalado": 0.250000
-        },
-        # Caso 5: Registro INVÁLIDO -> Cantidad igual a 0
-        {
-            "id_orden": "ORD-1005",
-            "fecha": "2026-10-20",
-            "id_producto": "PROD-SRV-01",
-            "cantidad": 0,
-            "precio_unitario_mxn": 300.00,
-            "monto_total_mxn": 0.00,
-            "email": "cero@servicio.com",
-            "segmento_importe": "NULO",
-            "monto_escalado": 0.000000
-        },
-        # Caso 6: Registro INVÁLIDO -> Falta campo obligatorio (email) y monto numérico corrupto
-        {
-            "id_orden": "ORD-1006",
-            "fecha": "2026-10-22",
-            "id_producto": "PROD-MISC-77",
-            "cantidad": 2,
-            "precio_unitario_mxn": "NO_ES_UN_NUMERO",
-            "monto_total_mxn": 100.00,
-            # "email" omitido intencionalmente
-            "segmento_importe": "MEDIO",
-            "monto_escalado": 0.150000
-        }
-    ]
-
-    # Cargar configuración desde entorno o parámetros por defecto
+    print("\n--- INICIANDO PIPELINE DE VALIDACIÓN Y CARGA A POSTGRESQL ---\n")
+    
+    # 1. Leer el CSV final que soltó el Ingeniero 2
+    df_final = pd.read_csv("ventas_integradas.csv")
+    
+    # 2. Convertirlo al formato de lista de diccionarios que Pydantic espera
+    lote_real = df_final.to_dict(orient='records')
+    
+    # 3. Conectar y cargar
     config_db = DBConfig()
-    logger.info(f"Parámetros configurados: host={config_db.host}, port={config_db.port}, db={config_db.database}, user={config_db.user}")
-
     try:
-        # Intentar conexión con la base de datos
         conexion_pg = obtener_conexion(config_db)
         try:
-            # 1. Configurar tablas DDL
             configurar_tablas(conexion_pg)
-
-            # 2. Ingestar lote con mecanismo resiliente
-            metricas_finales = cargar_lote_resiliente(conexion_pg, lote_prueba)
-
+            # Pasamos los 730 registros reales a tu función
+            cargar_lote_resiliente(conexion_pg, lote_real)
         finally:
             conexion_pg.close()
-            logger.info("Conexión a PostgreSQL cerrada limpiamente.")
-
-    except psycopg2.OperationalError as op_err:
-        logger.warning(
-            "\n" + "!" * 80 + "\n"
-            "AVISO DE ENTORNO LOCAL:\n"
-            "No fue posible autenticar contra PostgreSQL con las credenciales por defecto.\n"
-            "Por favor, configure sus credenciales mediante variables de entorno:\n"
-            "  - PG_HOST (defecto: localhost)\n"
-            "  - PG_PORT (defecto: 5432)\n"
-            "  - PG_DATABASE (defecto: postgres)\n"
-            "  - PG_USER (defecto: postgres)\n"
-            "  - PG_PASSWORD (defecto: postgres)\n"
-            f"Detalle técnico: {op_err}\n" + "!" * 80
-        )
+    except Exception as e:
+        print("Error de conexión a PostgreSQL:", e)
