@@ -1,0 +1,32 @@
+id_ticket,fecha_venta,sucursal,id_producto,cantidad,precio_unitario,monto_total_mxn,id_cliente,metodo_pago,motivo_cuarentena,fase
+POS-2026-0453,2026-10-03,Tecomán,PROD-049,2,365.92,731.84,,Vales,duplicado exacto,F1
+POS-2026-0266,2026-09-30,Villa de Álvarez,PROD-980,1,500.0,500.0,CTE-209,Tarjeta Débito,duplicado exacto,F1
+POS-2026-0106,2026-09-22,Colima Centro,PROD-030,2,332.7,665.4,CTE-252,Efectivo,duplicado exacto,F1
+POS-2026-0036,2026-09-13,Tecomán,PROD-016,3,2878.8,8636.4,CTE-244,Tarjeta Débito,duplicado exacto,F1
+POS-2026-0075,2026-09-20,Villa de Álvarez,PROD-045,1,1437.14,,CTE-210,Tarjeta Débito,duplicado exacto,F1
+POS-2026-0073,2026-10-14,Colima Centro,PROD-022,2,3632.45,7264.9,CTE-224,TRANSFERENCIA,duplicado exacto,F1
+POS-2026-0586,2026-10-03,Colima Centro,PROD-009,5,1740.68,8703.4,CTE-170,Tarjeta Crédito,duplicado exacto,F1
+POS-2026-0257,2026-09-07,Manzanillo Puerto,PROD-028,5,3413.23,17066.15,CTE-108,Vales,duplicado exacto,F1
+POS-2026-0457,2026-09-29,Manzanillo Puerto,PROD-018,3,4218.11,12654.33,CTE-125,efectivo,duplicado exacto,F1
+POS-2026-0020,2026-09-26,Villa de Álvarez,PROD-021,2,1493.06,2986.12,CTE-197,efectivo,duplicado exacto,F1
+POS-2026-0510,2026-09-24,Villa de Álvarez,PROD-028,1,3413.23,3413.23,,Tarjeta Crédito,duplicado exacto,F1
+POS-2026-0153,2026-09-20,Villa de Álvarez,PROD-019,4,2875.65,11502.6,,Tarjeta Crédito,duplicado exacto,F1
+POS-2026-0001,2026-09-13,Colima Centro,PROD-010,1,1227.12,1227.12,CTE-291,Tarjeta Crédito,duplicado exacto,F1
+POS-2026-0039,2026-09-20,Tecomán,PROD-050,3,349.93,1049.79,CTE-110,Tarjeta Crédito,duplicado exacto,F1
+POS-2026-0400,2026-09-29,Villa de Álvarez,PROD-033,1,1563.78,1563.78,CTE-121,Efectivo,duplicado exacto,F1
+POS-2026-0273,2026-10-08,Colima Centro,PROD-008,2,1008.15,2016.3,CTE-163,Tarjeta Crédito,duplicado exacto,F1
+POS-2026-0156,2026-10-12,Villa de Álvarez,PROD-021,2,1493.06,2986.12,,TRANSFERENCIA,duplicado exacto,F1
+POS-2026-0338,2026-09-04,Tecomán,PROD-013,1,905.68,905.68,CTE-170,Tarjeta Crédito,duplicado exacto,F1
+POS-2026-0401,2026-10-05,Tecomán,PROD-050,1,349.93,349.93,CTE-154,efectivo,duplicado exacto,F1
+POS-2026-0589,2026-10-11,Colima Centro,PROD-029,1,761.92,761.92,,Tarjeta Crédito,duplicado exacto,F1
+POS-2026-0035,2026-09-17,Colima Centro,PROD-027,0,1025.98,0.0,CTE-266,Efectivo,cantidad <= 0 (imposible),F3
+POS-2026-0216,2026-10-13,Colima Centro,PROD-005,-1,934.83,-934.83,CTE-281,Tarjeta Débito,cantidad <= 0 (imposible),F3
+POS-2026-0311,2026-09-12,Manzanillo Puerto,PROD-022,-1,3632.45,-3632.45,CTE-193,Efectivo,cantidad <= 0 (imposible),F3
+POS-2026-0340,2026-10-15,Villa de Álvarez,PROD-017,0,1630.95,0.0,CTE-154,Tarjeta Débito,cantidad <= 0 (imposible),F3
+POS-2026-0341,2026-10-12,Colima Centro,PROD-018,0,4218.11,0.0,ANONIMO,Tarjeta Débito,cantidad <= 0 (imposible),F3
+POS-2026-0355,2026-09-21,Manzanillo Puerto,PROD-001,0,545.42,0.0,CTE-277,Tarjeta Crédito,cantidad <= 0 (imposible),F3
+POS-2026-0371,2026-09-17,Colima Centro,PROD-005,-1,934.83,-934.83,CTE-186,TRANSFERENCIA,cantidad <= 0 (imposible),F3
+POS-2026-0452,2026-10-13,Manzanillo Puerto,PROD-044,0,4183.67,0.0,CTE-180,Vales,cantidad <= 0 (imposible),F3
+POS-2026-0493,2026-10-09,Colima Centro,PROD-928,-1,500.0,-500.0,CTE-120,Vales,cantidad <= 0 (imposible),F3
+POS-2026-0513,2026-09-20,Manzanillo Puerto,PROD-008,-1,1008.15,-1008.15,CTE-239,TRANSFERENCIA,cantidad <= 0 (imposible),F3
+POS-2026-0572,2026-10-08,Tecomán,PROD-009,-1,1740.68,-1740.68,CTE-174,Vales,cantidad <= 0 (imposible),F3
